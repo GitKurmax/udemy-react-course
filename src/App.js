@@ -13,7 +13,6 @@ import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { selectCartItems } from './redux/cart/cart.selectors';
 import CheckoutPage from './pages/checkout/checkout';
-import CartItem from './components/cart-item/CartItem';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
