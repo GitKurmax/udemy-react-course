@@ -4,7 +4,10 @@ const selectShop = state => state.shop;
 
 export const selectCollections = createSelector(
   [selectShop],
-  shop => shop.collections
+  shop => {
+    console.log(shop.collections)
+    return shop.collections
+  }
 );
 
 export const selectCollectionsForPreview = createSelector(
@@ -15,5 +18,8 @@ export const selectCollectionsForPreview = createSelector(
 export const selectCollection = collectionUrlParam =>
   createSelector(
     [selectCollections],
-    collections => collections[collectionUrlParam]
+    collections => {
+      console.log(collections.filter(collection => collection.title.toLowerCase() === collectionUrlParam))
+      return  collections.filter(collection => collection.title.toLowerCase() === collectionUrlParam)
+    }
   );

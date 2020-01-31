@@ -7,22 +7,25 @@ import ShopPage from './pages/shop/Shop';
 import HomePage from './pages/homepage/HomePage';
 import Header from './components/header/header';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
-import { auth, createUserProfileDocument, addCollectionAndDocuments } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument, addCollectionAndDocuments, firestore } from './firebase/firebase.utils';
 import { setCurrentUser } from './redux/user/user.actions';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
+import { getCollections } from './redux/shop/shop.actions';
 import { selectCartItems } from './redux/cart/cart.selectors';
 import CheckoutPage from './pages/checkout/checkout';
 import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
-
+  
   componentDidMount() {
-    const { setCurrentUser, collectionsArray } = this.props
-    console.log(collectionsArray)
-
+    const { setCurrentUser, getCollections } = this.props;
+  
+    getCollections();
+    
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      console.log(userAuth)
          if(userAuth) {
           
           const userRef = await createUserProfileDocument(userAuth);
@@ -35,7 +38,7 @@ class App extends React.Component {
         });
       } else {
         setCurrentUser(userAuth);
-        addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})))
+        // addCollectionAndDocuments('collections', collectionsArray.map(({title, items}) => ({title, items})))
       }
     });
   }
@@ -70,6 +73,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   setCurrentUser: user => dispatch(setCurrentUser(user)),
+  getCollections: () => dispatch(getCollections())
 });
 
 export default connect(
