@@ -1,7 +1,5 @@
-import SHOP_DATA from './shop.data';
-
 const INITIAL_STATE = {
-  collections: [1],
+  collections: [],
   download: false
 };
 
@@ -11,6 +9,7 @@ const shopReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       collections: action.payload,
+      download: true
      }
     default:
       return state;

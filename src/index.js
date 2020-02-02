@@ -6,13 +6,16 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { PersistGate } from 'redux-persist/integration/react';
+import FetchCollections from './components/fetch-collections/fetch-collections';
 
 
 ReactDOM.render(
     <Provider store={store}>
         <PersistGate persistor={persistor}>
-            <App />
-        </PersistGate>
+            <FetchCollections>
+                <App />
+            </FetchCollections>
+         </PersistGate>
     </Provider>
     ,
      document.getElementById('root'));

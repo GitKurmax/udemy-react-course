@@ -4,7 +4,6 @@ import { queryCollections } from '../../firebase/firebase.queries'
 export const getCollections = () => {
     return async (dispatch) => {
         const data = await queryCollections();
-        console.log(data)
         dispatch(setCollections(data))
     }
 };
