@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  collections: [],
+  collections: null,
   download: false
 };
 

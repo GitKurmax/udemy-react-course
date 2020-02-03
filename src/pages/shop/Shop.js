@@ -5,6 +5,11 @@ import { Route } from 'react-router-dom';
 
 import CollectionsOverview from '../../components/collections-overview/CollectionsOverview';
 import CollectionPage from '../collection/collection';
+import WithSpinner from '../../components/with-spinner/with-spinner';
+
+const CollectionPageWithSpinner = WithSpinner(CollectionPage);
+const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
+
 
 const ShopPage = ({ match }) => {
   const download = useSelector(state => state.shop.download);
@@ -15,12 +20,10 @@ const ShopPage = ({ match }) => {
 }, [download])
 
   return (
-    download && (
     <div className='shop-page'>
-      <Route exact path={`${match.path}`} component={CollectionsOverview} />
-      <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
+      <Route exact path={`${match.path}`} render={props => <CollectionsOverviewWithSpinner isLoading={!download}/>} />
+      <Route path={`${match.path}/:collectionId`} render={props => <CollectionPageWithSpinner isLoading={!download} {...props}/>} />
     </div>
-    )
   );
 }
 
