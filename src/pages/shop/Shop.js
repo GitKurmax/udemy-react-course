@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCollections } from '../../redux/shop/shop.actions';
 import { Route } from 'react-router-dom';
 
-import CollectionsOverview from '../../components/collections-overview/CollectionsOverview';
+import CollectionsOverviewContainer from '../../components/collections-overview/CollectionsOverview';
 import CollectionPage from '../collection/collection';
 import WithSpinner from '../../components/with-spinner/with-spinner';
 
 const CollectionPageWithSpinner = WithSpinner(CollectionPage);
-const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
+// const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
 
 
 const ShopPage = ({ match }) => {
@@ -21,7 +21,7 @@ const ShopPage = ({ match }) => {
 
   return (
     <div className='shop-page'>
-      <Route exact path={`${match.path}`} render={props => <CollectionsOverviewWithSpinner isLoading={!download}/>} />
+      <Route exact path={`${match.path}`} component={CollectionsOverviewContainer}/>
       <Route path={`${match.path}/:collectionId`} render={props => <CollectionPageWithSpinner isLoading={!download} {...props}/>} />
     </div>
   );
