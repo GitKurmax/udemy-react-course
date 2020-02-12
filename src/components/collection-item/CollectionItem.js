@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { addItem } from '../../redux/cart/cart.actions';
+import { actions as cartActions } from '../../redux/cart/cart.saga';
 
 import { CollectionItemElem, BackgroundImageElem, CollectionFooter, StyledButton } from './collectio-item.styles';
 
@@ -23,7 +23,7 @@ const CollectionItem = ({ item, addItem, width}) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-   addItem: item => dispatch(addItem(item))
+   addItem: item => dispatch(cartActions.addItem(item))
 });
 
 export default connect(

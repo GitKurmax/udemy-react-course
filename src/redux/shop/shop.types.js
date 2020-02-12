@@ -1,4 +1,0 @@
-export const ShopActionTypes = {
-    GET_COLLECTIONS: 'GET_COLLECTIONS',
-    SET_COLLECTIONS: 'SET_COLLECTIONS'
-}

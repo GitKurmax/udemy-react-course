@@ -5,6 +5,5 @@ export const queryCollections = async () => {
     let docRef = await firestore.collection("collections").get();
 
     docRef.docs.forEach(querySnapshot => collectionsArray.push(querySnapshot.data()))
-
     return collectionsArray
 }

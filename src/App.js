@@ -7,11 +7,11 @@ import ShopPage from './pages/shop/Shop';
 import HomePage from './pages/homepage/HomePage';
 import Header from './components/header/header';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
-import { auth, createUserProfileDocument, addCollectionAndDocuments, firestore } from './firebase/firebase.utils';
-import { setCurrentUser } from './redux/user/user.actions';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
-import { getCollections } from './redux/shop/shop.actions';
+import { actions as shopActions } from './redux/shop/shop.saga';
+import { actions as userActions } from './redux/user/user.saga';
+
 import { selectCartItems } from './redux/cart/cart.selectors';
 import CheckoutPage from './pages/checkout/checkout';
 import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
@@ -20,30 +20,10 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
   
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const { checkUserSession, getCollections } = this.props;
   
-    getCollections();
-    
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      console.log(userAuth)
-         if(userAuth) {
-          
-          const userRef = await createUserProfileDocument(userAuth);
-          
-          userRef.onSnapshot(snapShot => {
-            setCurrentUser({
-              id: snapShot.id,
-              ...snapShot.data()
-            })
-        });
-      } else {
-        setCurrentUser(userAuth);
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth()
+    // getCollections();    
+    checkUserSession();
   }
 
   render() {
@@ -61,7 +41,6 @@ class App extends React.Component {
       </>
     );
   }
-  
 }
 
 const mapStateToProps = createStructuredSelector({
@@ -71,7 +50,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user)),
+  checkUserSession: () => dispatch(userActions.checkUserSession()),
+  getCollections: () => dispatch(shopActions.getCollections())
 });
 
 export default connect(
