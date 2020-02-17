@@ -12,18 +12,37 @@ import { selectCurrentUser } from './redux/user/user.selectors';
 import { actions as shopActions } from './redux/shop/shop.saga';
 import { actions as userActions } from './redux/user/user.saga';
 
-import { selectCartItems } from './redux/cart/cart.selectors';
 import CheckoutPage from './pages/checkout/checkout';
 import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
 
+import { CartContext } from './providers/cart/cart.provider';
+
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cartItems: []
+    }
+  }
   unsubscribeFromAuth = null;
   
   componentDidMount() {
     const { checkUserSession, getCollections } = this.props;
-  
+    
+    this.setState({
+      cartItems: this.context.cartItems
+    });
     // getCollections();    
     checkUserSession();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.context.cartItems.length !== prevState.cartItems.length) {
+      this.setState({
+        cartItems: this.context.cartItems
+      });
+    }
   }
 
   render() {
@@ -34,7 +53,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={HomePage}/>
             <Route path="/shop" component={ShopPage}/>
-            <Route exact path='/checkout' render={() => this.props.cartItems.length ? <CheckoutPage />: <Redirect to='/shop' /> }/>
+            <Route exact path='/checkout' render={() => this.state.cartItems.length ? <CheckoutPage />: <Redirect to='/shop' /> }/>
             <Route exact path="/signin" render={() => this.props.currentUser ? <Redirect to='/' /> : <SignInAndSignUpPage /> }/>
           </Switch>     
         </Router>
@@ -43,9 +62,10 @@ class App extends React.Component {
   }
 }
 
+App.contextType = CartContext;
+
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  cartItems: selectCartItems,
   collectionsArray: selectCollectionsForPreview
 });
 

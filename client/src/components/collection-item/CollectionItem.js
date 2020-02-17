@@ -1,12 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
-
-import { actions as cartActions } from '../../redux/cart/cart.saga';
+import React, { useContext } from 'react';
+import { CartContext } from '../../providers/cart/cart.provider';
 
 import { CollectionItemElem, BackgroundImageElem, CollectionFooter, StyledButton } from './collectio-item.styles';
 
-const CollectionItem = ({ item, addItem, width}) => {
+const CollectionItem = ({ item, width}) => {
   const { name, price, imageUrl } = item;
+  const { addItem } = useContext(CartContext);
 
   return (
     <CollectionItemElem width = {width}>
@@ -22,11 +21,4 @@ const CollectionItem = ({ item, addItem, width}) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-   addItem: item => dispatch(cartActions.addItem(item))
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(CollectionItem);
+export default CollectionItem;

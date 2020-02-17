@@ -1,4 +1,4 @@
-import { addItemToCart, removeItemFromCart } from './cart.utils';
+import { addItemToCart, removeItemFromCart } from '../../providers/cart/cart.utils';
 import { all, put, call, takeLatest } from 'redux-saga/effects';
 import { UserActionTypes } from '../user/user.saga';
 
