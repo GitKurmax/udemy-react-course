@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import ShopPage from './pages/shop/Shop';
-import HomePage from './pages/homepage/HomePage';
 import Header from './components/header/header';
-import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up';
+import Spinner from './components/spinner/spinner';
+import ErrorBoundary from './components/error-boundary/error-boundary';
+
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { actions as shopActions } from './redux/shop/shop.saga';
 import { actions as userActions } from './redux/user/user.saga';
 
-import CheckoutPage from './pages/checkout/checkout';
 import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
 
 import { CartContext } from './providers/cart/cart.provider';
+
+const HomePage = lazy(() => import('./pages/homepage/HomePage'));
+const ShopPage = lazy(() => import('./pages/shop/Shop'));
+const CheckoutPage = lazy(() => import('./pages/checkout/checkout'));
+const SignInAndSignUpPage = lazy(() => import('./pages/sign-in-and-sign-up/sign-in-and-sign-up'));
 
 class App extends React.Component {
   constructor(props) {
@@ -26,10 +30,10 @@ class App extends React.Component {
     }
   }
   unsubscribeFromAuth = null;
-  
+
   componentDidMount() {
     const { checkUserSession, getCollections } = this.props;
-    
+
     this.setState({
       cartItems: this.context.cartItems
     });
@@ -49,13 +53,17 @@ class App extends React.Component {
     return (
       <>
         <Router>
-          <Header/>
+          <Header />
           <Switch>
-            <Route exact path="/" component={HomePage}/>
-            <Route path="/shop" component={ShopPage}/>
-            <Route exact path='/checkout' render={() => this.state.cartItems.length ? <CheckoutPage />: <Redirect to='/shop' /> }/>
-            <Route exact path="/signin" render={() => this.props.currentUser ? <Redirect to='/' /> : <SignInAndSignUpPage /> }/>
-          </Switch>     
+            <ErrorBoundary>
+              <Suspense fallback={<Spinner/>}>
+                <Route exact path="/" component={HomePage} />
+                <Route path="/shop" component={ShopPage} />
+                <Route exact path='/checkout' render={() => this.state.cartItems.length ? <CheckoutPage /> : <Redirect to='/shop' />} />
+                <Route exact path="/signin" render={() => this.props.currentUser ? <Redirect to='/' /> : <SignInAndSignUpPage />} />
+              </Suspense>
+            </ErrorBoundary>
+          </Switch>
         </Router>
       </>
     );

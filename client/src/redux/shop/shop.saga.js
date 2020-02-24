@@ -36,7 +36,7 @@ export function* fetchCollectionsAsync() {
         console.log(data)
         yield put(actions.setCollections(data));
     } catch (error){
-        console.log(error.message)
+        console.log('Error in getting collections: ' + error.message)
     }
 }
 
