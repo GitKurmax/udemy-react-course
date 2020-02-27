@@ -106,7 +106,9 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
       );
       const userSnapshot = yield userRef.get();
       yield put( actions.signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
+      sessionStorage.setItem('session', 'user')
     } catch (error) {
+      console.log("Error --> " + error)
       yield put(actions.signInFailure(error));
     }
   }
@@ -114,6 +116,7 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
   export function* signInWithGoogle() {
     try {
       const { user } = yield auth.signInWithPopup(googleProvider);
+      // console.log('User --> ', user)
       yield getSnapshotFromUserAuth(user);
     } catch (error) {
       yield put(actions.signInFailure(error));
@@ -189,9 +192,10 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     yield all([
       call(onGoogleSignInStart),
       call(onEmailSignInStart),
-      call(isUserAuthenticated),
+      // call(isUserAuthenticated),
       call(onSignOutStart),
       call(onSignUpStart),
-      call(onSignUpSuccess)
+      call(onSignUpSuccess),
+      call(onCheckUserSession)
     ]);
   }

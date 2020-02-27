@@ -29,16 +29,15 @@ class App extends React.Component {
       cartItems: []
     }
   }
-  unsubscribeFromAuth = null;
-
   componentDidMount() {
-    const { checkUserSession, getCollections } = this.props;
+    const { checkUserSession } = this.props;
 
     this.setState({
       cartItems: this.context.cartItems
     });
-    // getCollections();    
+    
     checkUserSession();
+    
   }
 
   componentDidUpdate(prevProps, prevState) {

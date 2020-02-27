@@ -3,8 +3,8 @@ import React from 'react';
 import { SpinnerContainer, SpinnerOverlay } from './with-spinner.styles';
 
 const WithSpinner = (WrappedComponent) => {
+  console.log("With spinner")
   const Spinner = ({isLoading, ...otherProps }) => {
-    console.log(isLoading)
     return isLoading ? (
       <SpinnerOverlay>
         <SpinnerContainer />

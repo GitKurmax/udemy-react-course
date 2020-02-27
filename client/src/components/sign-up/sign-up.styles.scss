@@ -7,3 +7,9 @@
       margin: 10px 0;
     }
   }
+
+  @media screen and (max-width: 800px) {
+    .sign-up {
+      width: auto;
+    }
+  }

@@ -10,8 +10,9 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
           : cartItem
       );
     }
-  
-    return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
+    let newCartItems = [...cartItems, { ...cartItemToAdd, quantity: 1 }]
+   
+    return newCartItems;
   };
 
   export const removeItemFromCart = (cartItems, cartItemToRemove) => {

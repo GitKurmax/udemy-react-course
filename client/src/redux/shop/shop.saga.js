@@ -32,9 +32,10 @@ export const actions = {
 
 export function* fetchCollectionsAsync() {
     try {
-        let data =  yield queryCollections();
-        console.log(data)
-        yield put(actions.setCollections(data));
+      console.log("Getting collections")
+      let data =  yield queryCollections();
+      
+      yield put(actions.setCollections(data));
     } catch (error){
         console.log('Error in getting collections: ' + error.message)
     }

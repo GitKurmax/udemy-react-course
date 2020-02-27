@@ -2,6 +2,10 @@ import styled, {css} from 'styled-components';
 
 const menuItemLarge = css`
     height: 380px;
+    
+    @media screen and (max-width: 800px) {
+        height: 240px;
+    }
 `
 const menuItemLargeStyles = props => {
     return props.large ? menuItemLarge : null;

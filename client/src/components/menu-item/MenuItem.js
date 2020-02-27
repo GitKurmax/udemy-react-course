@@ -8,7 +8,6 @@ import {
     Title,
     Span
  } from './menu-item.styles';
-// import './menu-item.styles.scss'
 
 const MenuItem = ({title, imageUrl, size, linkUrl, history, match}) => {
     return (

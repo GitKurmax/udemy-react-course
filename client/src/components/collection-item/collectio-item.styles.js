@@ -11,6 +11,14 @@ export const StyledButton = styled(CustomButton)`
     position: absolute;
     top: 255px;
     display: none;
+
+    @media screen and (max-width: 800px) {
+        display: block;
+        position: static;
+        width: 80%;
+        height: 40px;
+        line-height: 40px;
+    }
 `
 
 export const BackgroundImageElem = styled.div`
@@ -19,7 +27,11 @@ export const BackgroundImageElem = styled.div`
     background-size: cover;
     background-position: center;
     margin-bottom: 5px;
-    ${backgroundImageUrl}    
+
+    @media screen and (max-width: 800px) {
+        margin-bottom: 10px;
+    }
+    ${backgroundImageUrl} 
 ` 
 
 export const CollectionItemElem = styled.div`
@@ -37,6 +49,10 @@ export const CollectionItemElem = styled.div`
         opacity: 0.85;
         display: flex;
     }
+
+    @media screen and (max-width: 800px) {
+        width: 100%
+    }
 `
 
 export const CollectionFooter = styled.div`
@@ -53,5 +69,14 @@ export const CollectionFooter = styled.div`
 
     .price {
         width: 10%;
+    }
+
+    @media screen and (max-width: 800px) {
+        font-size: 14px;
+        width: 80%;
+        height: auto;
+        .name {
+            margin-bottom: 10px;
+        }
     }
 `

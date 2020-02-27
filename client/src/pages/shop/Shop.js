@@ -17,7 +17,7 @@ const ShopPage = ({ match }) => {
 
   useEffect(() => {
     dispatch(actions.getCollections())
-}, [download])
+},[])
 
   return (
     <div className='shop-page'>
