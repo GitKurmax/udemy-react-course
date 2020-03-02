@@ -30,6 +30,7 @@ export const BackgroundImageElem = styled.div`
 
     @media screen and (max-width: 800px) {
         margin-bottom: 10px;
+        max-height: 258px;
     }
     ${backgroundImageUrl} 
 ` 
@@ -73,10 +74,16 @@ export const CollectionFooter = styled.div`
 
     @media screen and (max-width: 800px) {
         font-size: 14px;
-        width: 80%;
+        width: 100%;
         height: auto;
+        
         .name {
             margin-bottom: 10px;
+            width: 70%;
+        }
+
+        .price {
+            width: fit-content;
         }
     }
 `
